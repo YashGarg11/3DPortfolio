@@ -34,10 +34,9 @@
 .logoIcon {
   color: #10cedf;
   size: 100px;
-
   height: 60px;
   width: 60px;
-  margin-left: -50px;
+  margin-left: 0;
   transform: scale(1.1);
   margin-right: 20px;
   filter: drop-shadow(0 0 2px rgba(16, 206, 223, 0.5));
@@ -54,6 +53,9 @@
   color: #f8f9fa;
   padding: 0;
   cursor: pointer;
+  display: none;
+  z-index: 3000;
+  position: relative;
 }
 
 .menuIcon {
@@ -126,6 +128,13 @@
 
 /* ✅ Responsive Design */
 @media (max-width: 992px) {
+  .toggleButton {
+    display: block !important;
+    margin-left: auto;
+    color: #10cedf;
+    padding: 10px;
+  }
+
   .navLinksContainer {
     position: fixed;
     top: 60px;
@@ -136,6 +145,7 @@
     transform: translateY(-100%);
     opacity: 0;
     transition: all 0.3s ease-in-out;
+    z-index: 2999;
   }
 
   .navOpen {

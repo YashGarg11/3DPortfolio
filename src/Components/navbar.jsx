@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
-import { FaBars, FaBrain, FaCode, FaLaptopCode, FaRocket } from "react-icons/fa";
+import { FaBars, FaBrain, FaCode, FaLaptopCode, FaRocket, FaTimes } from "react-icons/fa";
 import styles from "./navbar.module.css";
 
 const Navbar = () => {
@@ -19,22 +19,26 @@ const Navbar = () => {
   const handleClick = (e, sectionId) => {
     e.preventDefault();
     const section = document.getElementById(sectionId);
-    const navbarHeight = 80; // Height of navbar
+    const navbarHeight = 80;
     const sectionTop = section.offsetTop - navbarHeight;
     window.scrollTo({
       top: sectionTop,
       behavior: 'smooth'
     });
+    setIsOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
     <nav className={`navbar navbar-expand-lg fixed-top ${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-      <div className={`container ${styles.navContainer}`}>
-        {/* Enhanced Brand Logo with Animation */}
+      <div className="container">
+        {/* Brand Logo */}
         <a className={`navbar-brand ${styles.brand}`} href="#home">
           <div className={styles.logoWrapper}>
             <img src="/yg-logo-monogram.jpg" alt="YG Logo" className={styles.logoIcon} />
-           
           </div>
           <span className={styles.logo}>
             <span className={styles.logoText}>
@@ -44,16 +48,16 @@ const Navbar = () => {
           </span>
         </a>
 
-        {/* Animated Toggle Button */}
+        {/* Toggle Button */}
         <button
-          className={`navbar-toggler ${styles.toggleButton} ${isOpen ? styles.active : ''}`}
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
+          className={styles.toggleButton}
+          onClick={toggleMenu}
+          aria-label="Toggle navigation"
         >
-          <FaBars size={24} className={styles.menuIcon} />
+          {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
 
-        {/* Enhanced Navigation Links with Icons */}
+        {/* Navigation Links */}
         <div className={`${styles.navLinksContainer} ${isOpen ? styles.navOpen : styles.navClosed}`}>
           <ul className={styles.navList}>
             <li className={styles.navItem}>
