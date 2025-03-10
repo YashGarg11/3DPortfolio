@@ -57,7 +57,7 @@ export default function Model1({ scrollProgress }) {
       <primitive 
         ref={modelRef} 
         object={scene} 
-        scale={3} 
+        scale={5} 
         position={[0, 2, 0]} 
         castShadow 
         receiveShadow 

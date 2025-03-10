@@ -72,7 +72,16 @@ const Home = () => {
           fontSize: isMobile ? "1.3rem" : isTablet ? "1.5rem" : "1.8rem",
           margin: "0.5rem 0"
         }}>
-          And I'm a <span className="text"></span>
+          And I'm a <span style={{
+          color: "aqua",
+          textShadow: `
+      0 0 3px rgba(0, 255, 255, 0.8),
+      0 0 6px rgba(0, 255, 255, 0.6),
+      0 0 12px rgba(0, 255, 255, 0.4),
+      0 0 24px rgba(0, 255, 255, 0.2)
+    `,
+          fontSize: "2rem",
+          }} className="text"></span>
         </h3>
         <h4 style={{ 
           color: "#ccc", 

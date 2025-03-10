@@ -1,18 +1,21 @@
 import { useSpring } from "@react-spring/three";
 import { lazy, useEffect, useRef, useState } from "react";
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Vector3 } from 'three';
 import ButtonContainer from "./Components/ButtonContainer";
 import MainScene from "./Components/MainScene";
 import NameScene from "./Components/NameScene";
 import Navbar from "./Components/navbar";
 import About from "./pages/About";
+import HireMe from "./pages/Hire_Me";
 import Home from "./pages/home";
 import Projects from "./pages/Projects";
 import Skill from "./pages/Skill";
-
+import Talk from "./pages/Talk";
 const LazyName = lazy(() => import("./Components/pr"));
 
-function App() {
+function MainContent() {
+    const navigate = useNavigate();
     const [scrollProgress, setScrollProgress] = useState(0);
     const [startAnimation, setStartAnimation] = useState(false);
     const [backgroundOpacity, setBackgroundOpacity] = useState(1);
@@ -106,7 +109,7 @@ function App() {
             } else {
                 switch (activeSection) {
                     case "home":
-                        targetPosition = new Vector3(-1.5, 1.2, 0);
+                        targetPosition = new Vector3(-1.5, 1, 0);
                         break;
                     case "about":
                         targetPosition = new Vector3(-8, 1 + scrollProgress * 3, 0);
@@ -152,7 +155,10 @@ function App() {
                         position: "relative", 
                         width: "100vw", 
                         minHeight: "100vh", 
-                        backgroundImage: `url("/background${sectionId === 'home' ? '' : '1'}.jpg")`,
+                        backgroundImage: sectionId === 'home' ? 'url("/background.jpg")' :
+                          sectionId === 'about' ? 'url("/backgrounda2.jpg")' :
+                          sectionId === 'projects' ? 'url("/backgrounda1.jpg")' :
+                          'url("/backgrounda2.jpg")',
                         backgroundSize: "cover", 
                         backgroundPosition: "center", 
                         backgroundRepeat: "no-repeat", 
@@ -190,8 +196,15 @@ function App() {
             {/* Button Container */}
             {activeSection === "home" && !showText && (
                 <>
-                    <ButtonContainer style={{left:"2rem"}} text="Hire Me" />
-                    <ButtonContainer style={{left:"15rem"}} text="Talk To Me"  />
+                    <ButtonContainer 
+                        onClick={() => navigate('/hire-me')} 
+                        style={{left:"2rem"}} 
+                        text="Hire Me" 
+                    />
+                    <ButtonContainer style={{left:"15rem"}} 
+                        onClick={() => navigate('/talk')}
+                                                            
+                    text="Talk To Me" />
                 </>
             )}
 
@@ -228,6 +241,16 @@ function App() {
                 />
             )}
         </>
+    );
+}
+
+function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<MainContent />} />
+            <Route path="/hire-me" element={<HireMe />} />
+            <Route path="/talk" element={<Talk />} />
+        </Routes>
     );
 }
 

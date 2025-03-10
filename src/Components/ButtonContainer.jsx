@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomButton from './CustomButton';
 
-const ButtonContainer = ({ style, text}) => {
+const ButtonContainer = ({ style, text, onClick }) => {
   return (
     <div style={{
       position: 'absolute',
@@ -13,7 +13,7 @@ const ButtonContainer = ({ style, text}) => {
     }}>
       <CustomButton 
         text={text}
-        
+        onClick={onClick}
       />
     </div>
   );
