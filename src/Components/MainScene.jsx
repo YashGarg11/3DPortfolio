@@ -9,6 +9,7 @@ const MainScene = ({
     activeSection, 
     modelPosition, 
     modelScale,
+    modelRotation,
     setModelPosition,
     targetModelPosition,
     modelZIndex 
@@ -35,6 +36,7 @@ const MainScene = ({
                     scrollProgress={scrollProgress} 
                     startAnimation={startAnimation} 
                     scale={modelScale} 
+                    rotation={modelRotation}
                     activeSection={activeSection} 
                     position={modelPosition} 
                 />

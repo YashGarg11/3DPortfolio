@@ -2,6 +2,7 @@ import { useSpring } from "@react-spring/three";
 import { lazy, useEffect, useRef, useState } from "react";
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Vector3 } from 'three';
+import BookCamera from "./Components/book_camera";
 import ButtonContainer from "./Components/ButtonContainer";
 import MainScene from "./Components/MainScene";
 import NameScene from "./Components/NameScene";
@@ -13,7 +14,7 @@ import Projects from "./pages/Projects";
 import Skill from "./pages/Skill";
 import Talk from "./pages/Talk";
 const LazyName = lazy(() => import("./Components/pr"));
-
+const LazyName1 = lazy(() => import("./Components/skill_book"));
 function MainContent() {
     const navigate = useNavigate();
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -23,17 +24,21 @@ function MainContent() {
     const [activeSection, setActiveSection] = useState("home");
     const [modelZIndex, setModelZIndex] = useState(2001);
     const [modelPosition, setModelPosition] = useState([0, 1, 0]);
+    const [modelScale, setModelScale] = useState(3);
+    const [modelRotation, setModelRotation] = useState([0, 0, 0]);
     const targetModelPosition = useRef(new Vector3(0, 1, 0));
     const debounceTimeout = useRef(null);
     const [showLazyName, setShowLazyName] = useState(true);
     const [fadeOpacity, setFadeOpacity] = useState(1);
+    const [previousSection, setPreviousSection] = useState("home");
+    const [transitionProgress, setTransitionProgress] = useState(0);
 
     const lightProps = useSpring({
         lightIntensity: startAnimation ? 1.2 : 0.1,
         config: { duration: 3000 },
     });
 
-    const modelScale = useSpring({
+    const modelScaleSpring = useSpring({
         scale: startAnimation ? 0.5 : 3,
         config: { duration: 7000 },
     });
@@ -42,6 +47,15 @@ function MainContent() {
     useEffect(() => {
         document.body.style.overflow = "hidden";
         setFadeOpacity(1);
+
+        // Reset any body styles that might cause whitespace
+        document.body.style.margin = "0";
+        document.body.style.padding = "0";
+        
+        // Apply a style to html and body to prevent whitespace
+        document.documentElement.style.height = "100%";
+        document.body.style.height = "100%";
+        document.body.style.minHeight = "100vh";
 
         const timeouts = [
             setTimeout(() => {
@@ -62,7 +76,11 @@ function MainContent() {
             }, 7000)
         ];
 
-        return () => timeouts.forEach(timeout => clearTimeout(timeout));
+        return () => {
+            timeouts.forEach(timeout => clearTimeout(timeout));
+            // Cleanup when component unmounts
+            document.body.style.overflow = "auto";
+        };
     }, []);
 
     // Scroll and section observer effect
@@ -78,7 +96,9 @@ function MainContent() {
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
+                        setPreviousSection(activeSection);
                         setActiveSection(entry.target.id);
+                        setTransitionProgress(0);
                     }
                 });
             },
@@ -93,7 +113,25 @@ function MainContent() {
             window.removeEventListener("scroll", handleScroll);
             sections.forEach((section) => observer.unobserve(section));
         };
-    }, []);
+    }, [activeSection]);
+
+    // Handle smooth transition between sections
+    useEffect(() => {
+        if (previousSection !== activeSection) {
+            const transitionInterval = setInterval(() => {
+                setTransitionProgress(prev => {
+                    const newProgress = prev + 0.05;
+                    if (newProgress >= 1) {
+                        clearInterval(transitionInterval);
+                        return 1;
+                    }
+                    return newProgress;
+                });
+            }, 20);
+            
+            return () => clearInterval(transitionInterval);
+        }
+    }, [previousSection, activeSection]);
 
     // Model position effect
     useEffect(() => {
@@ -105,41 +143,61 @@ function MainContent() {
             let targetPosition;
 
             if (!startAnimation) {
-                targetPosition = new Vector3(0, 1, 0);
+                targetPosition = new Vector3(0, 3, 0);
+                setModelScale(3);
+                setModelRotation([0, 0, 0]);
             } else {
                 switch (activeSection) {
                     case "home":
-                        targetPosition = new Vector3(-1.5, 1, 0);
+                        targetPosition = new Vector3(-2.5, 2.15, 0);
+                        setModelScale(2.5);
+                        setModelRotation([0, 0, 0]);
                         break;
                     case "about":
-                        targetPosition = new Vector3(-8, 1 + scrollProgress * 3, 0);
+                        targetPosition = new Vector3(-5, 2 + scrollProgress * 2, 3);
+                        setModelScale(2); // Adjusted scale
+                        setModelRotation([-2, Math.PI * scrollProgress * 2, 0]);
                         break;
                     case "projects":
-                        targetPosition = new Vector3(8, 1 + scrollProgress * 3, 0);
+                        targetPosition = new Vector3(2, 3, 1);
+                        setModelScale(1.8);
+                        setModelRotation([0, Math.PI * 0.5, 0]);
                         break;
-                    case "skill":
-                        targetPosition = new Vector3(0, 2 + scrollProgress * 3, 0);
+                    case "Skill":
+                        targetPosition = new Vector3(-5.5,3, 7.2);
+                        setModelScale(1);
+                        setModelRotation([Math.PI * 0.2, Math.PI * scrollProgress, 0]);
                         break;
                     default:
                         targetPosition = new Vector3(0, 1, 0);
+                        setModelScale(0.5);
+                        setModelRotation([0, 0, 0]);
                 }
             }
             targetModelPosition.current.copy(targetPosition);
-            if (activeSection === "about") {
-                const homePosition = new Vector3(0, 1, 0);
-                const aboutPosition = new Vector3(-10, 1 + scrollProgress * 3, 0);
+            
+            // Apply smooth transitions between sections
+            if (previousSection === "home" && activeSection === "about") {
+                const homePosition = new Vector3(-2.5, 2.15, 0);
+                const aboutPosition = new Vector3(-5, 2, 4);
+                targetModelPosition.current.lerpVectors(homePosition, aboutPosition, transitionProgress);
+                // Smoothly transition scale and rotation
+                const homeScale = 2.5;
+                const aboutScale = 3;
+                setModelScale(homeScale + (aboutScale - homeScale) * transitionProgress);
+                const homeRotation = [0, 0, 0];
+                // 
+               
+            } else if (activeSection === "about") {
+                const homePosition = new Vector3(-2.5, 2.15, 0);
+                const aboutPosition = new Vector3(-10, 8, 12);
                 targetModelPosition.current.lerpVectors(homePosition, aboutPosition, scrollProgress);
-            } else if (activeSection === "projects") {
-                const homePosition = new Vector3(-10, 1 + scrollProgress * 3, 0);
-                const projectPosition = new Vector3(10, 1 + scrollProgress * 3, 0);
-                targetModelPosition.current.lerpVectors(homePosition, projectPosition, scrollProgress);
-            } else if (activeSection === "skill") {
-                const homePosition = new Vector3(0, 1, 0);
-                const skillPosition = new Vector3(0, 2 + scrollProgress * 3, 0);
-                targetModelPosition.current.lerpVectors(homePosition, skillPosition, scrollProgress);
-            }
+                // Adjusted scale and rotation
+                setModelScale(2);
+                setModelRotation([0, Math.PI * scrollProgress * 2, 0]);
+            } 
         }, 100);
-    }, [activeSection, scrollProgress, startAnimation]);
+    }, [activeSection, scrollProgress, startAnimation, previousSection, transitionProgress]);
 
 
     return (
@@ -163,7 +221,8 @@ function MainContent() {
                         backgroundPosition: "center", 
                         backgroundRepeat: "no-repeat", 
                         transition: "background-image 1s ease-in-out", 
-                        zIndex: -10 
+                        zIndex: -10,
+                        marginTop: sectionId === 'home' ? "80px" : "0" // Add padding to home section to prevent navbar overlap
                     }}
                 >
                     {activeSection === sectionId && {
@@ -227,7 +286,8 @@ function MainContent() {
                 startAnimation={startAnimation}
                 activeSection={activeSection}
                 modelPosition={modelPosition}
-                modelScale={modelScale.scale}
+                modelScale={modelScale}
+                modelRotation={modelRotation}
                 setModelPosition={setModelPosition}
                 targetModelPosition={targetModelPosition}
                 modelZIndex={modelZIndex}
@@ -238,6 +298,11 @@ function MainContent() {
                 <NameScene 
                     LazyName={LazyName}
                     fadeOpacity={fadeOpacity}
+                />
+            )}
+            {activeSection === "Skill"   && (
+                <BookCamera
+                    LazyName1={LazyName1}
                 />
             )}
         </>

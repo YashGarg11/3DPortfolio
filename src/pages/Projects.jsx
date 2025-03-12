@@ -8,6 +8,7 @@ export default function Projects() {
     >
       <h1>Projects are here</h1>
       <p>These are my projects</p>
+    
     </section>
   );
 }
