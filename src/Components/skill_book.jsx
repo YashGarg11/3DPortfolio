@@ -1,9 +1,9 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect } from "react";
-
+import * as THREE from "three";
 
 export default function skill_book() {
-    const { scene, animations } = useGLTF("/book.glb");
+    const { scene, animations } = useGLTF("/book1.glb");
     const { actions } = useAnimations(animations, scene);
 
     useEffect(() => {
@@ -12,6 +12,13 @@ export default function skill_book() {
             const animationAction = actions[firstAnimationName];
 
             if (animationAction) {
+                // Set to play only once
+                animationAction.loop = THREE.LoopOnce;
+                animationAction.clampWhenFinished = true;
+                
+                // Slow down the animation speed
+                animationAction.timeScale = 0.5; // Half speed
+                
                 animationAction.play();
             }
         }
@@ -31,9 +38,9 @@ export default function skill_book() {
 <directionalLight position={[0, 10, 5]} intensity={0.5} castShadow />
     
     <primitive object={scene} 
-                scale={1.8}
+                scale={2}
                 position={[10, 1, 0]}
-                rotation={[-0.1, 2,1.2]}
+                rotation={[-0.1, 1.8,1.2]}
                 castShadow
                 receiveShadow  /></>);
 }

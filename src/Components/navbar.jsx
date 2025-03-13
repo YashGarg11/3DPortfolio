@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
-import { FaBars, FaBrain, FaCode, FaLaptopCode, FaRocket, FaTimes } from "react-icons/fa";
+import { FaAddressBook, FaBars, FaBrain, FaCode, FaLaptopCode, FaRocket, FaTimes } from "react-icons/fa";
 import styles from "./navbar.module.css";
 
 const Navbar = () => {
@@ -82,6 +82,12 @@ const Navbar = () => {
               <a className={styles.navLink} href="#Skill" onClick={(e) => handleClick(e, 'Skill')}>
                 <FaRocket className={styles.navIcon} />
                 Skills
+              </a>
+            </li>
+            <li className={styles.navItem}>
+              <a className={styles.navLink} href="#contact" onClick={(e) => handleClick(e, 'contact')}>
+                <FaAddressBook className={styles.navIcon} />
+                Contact
               </a>
             </li>
           </ul>

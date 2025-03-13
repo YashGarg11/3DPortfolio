@@ -193,6 +193,15 @@ export default function About() {
             <p style={{
               fontSize: isMobile ? "1rem" : "1.1rem",
               lineHeight: "1.6",
+              marginBottom: "20px"
+            }}>
+              As a MERN stack developer, I build robust web applications using MongoDB, Express.js, React, and Node.js.
+              I enjoy creating seamless user experiences with responsive front-end designs and efficient back-end solutions.
+            </p>
+            
+            <p style={{
+              fontSize: isMobile ? "1rem" : "1.1rem",
+              lineHeight: "1.6",
               marginBottom: "30px"
             }}>
               With a background in both development and design, I bring a unique perspective to every project, 
@@ -201,6 +210,7 @@ export default function About() {
             
             {/* Social Media Icons */}
             <div style={{
+              marginBottom:isMobile ? "60px" : "0px",
               display: "flex",
               gap: "20px",
               marginTop: "20px"

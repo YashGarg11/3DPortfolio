@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Vector3 } from 'three';
 import BookCamera from "./Components/book_camera";
 import ButtonContainer from "./Components/ButtonContainer";
+import ContactUs from "./Components/Contact-us";
 import MainScene from "./Components/MainScene";
 import NameScene from "./Components/NameScene";
 import Navbar from "./Components/navbar";
@@ -99,6 +100,13 @@ function MainContent() {
                         setPreviousSection(activeSection);
                         setActiveSection(entry.target.id);
                         setTransitionProgress(0);
+                        
+                        // Update model z-index based on section
+                        if (entry.target.id === "home" || entry.target.id === "about" || entry.target.id === "Skill") {
+                            setModelZIndex(2001);
+                        } else {
+                            setModelZIndex(-200);
+                        }
                     }
                 });
             },
@@ -205,7 +213,7 @@ function MainContent() {
             <Navbar style={{ zIndex: 50 }} />
             
             {/* Sections */}
-            {["home", "about", "projects", "Skill"].map((sectionId) => (
+            {["home", "about", "projects", "Skill", "contact"].map((sectionId) => (
                 <section 
                     key={sectionId}
                     id={sectionId} 
@@ -216,12 +224,13 @@ function MainContent() {
                         backgroundImage: sectionId === 'home' ? 'url("/background.jpg")' :
                           sectionId === 'about' ? 'url("/backgrounda2.jpg")' :
                           sectionId === 'projects' ? 'url("/backgrounda1.jpg")' :
+                          sectionId === 'contact' ? 'url("/backgrounda1.jpg")' :
                           'url("/backgrounda2.jpg")',
                         backgroundSize: "cover", 
                         backgroundPosition: "center", 
                         backgroundRepeat: "no-repeat", 
                         transition: "background-image 1s ease-in-out", 
-                        zIndex: -10,
+                        zIndex: 10,
                         marginTop: sectionId === 'home' ? "80px" : "0" // Add padding to home section to prevent navbar overlap
                     }}
                 >
@@ -229,7 +238,8 @@ function MainContent() {
                         home: <Home />,
                         about: <About />,
                         projects: <Projects />,
-                        Skill: <Skill />
+                        Skill: <Skill />,
+                        contact: <ContactUs />
                     }[sectionId]}
                 </section>
             ))}
@@ -315,6 +325,11 @@ function App() {
             <Route path="/" element={<MainContent />} />
             <Route path="/hire-me" element={<HireMe />} />
             <Route path="/talk" element={<Talk />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/skill" element={<Skill />} />
+            <Route path="/home" element={<Home />} />
         </Routes>
     );
 }
