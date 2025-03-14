@@ -44,7 +44,7 @@ const BookCamera = ({ LazyName1 }) => {
             top: isMobile ? "3%" : isTablet ? "4%" : "5%",  
             width: "100vw",
             height: isMobile ? "90vh" : isTablet ? "95vh" : "100vh", 
-            zIndex: 1000, 
+            zIndex: 3000, 
             transform: isMobile ? "translateY(2200px)" : isTablet ? "translateY(2200px)" : "translateY(2200px)",
         }}>
             <Canvas style={{ width: "100%", height: "100%" }}>

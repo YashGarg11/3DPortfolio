@@ -33,6 +33,8 @@ function MainContent() {
     const [fadeOpacity, setFadeOpacity] = useState(1);
     const [previousSection, setPreviousSection] = useState("home");
     const [transitionProgress, setTransitionProgress] = useState(0);
+   
+    const [navbarZIndex, setNavbarZIndex] = useState(10);
 
     const lightProps = useSpring({
         lightIntensity: startAnimation ? 1.2 : 0.1,
@@ -74,7 +76,13 @@ function MainContent() {
             setTimeout(() => {
                 setShowLazyName(false);
                 document.body.style.overflow = "auto";
-            }, 7000)
+            }, 7000),
+            setTimeout(() => {
+                setIsnavbarshow(true);
+            }, 7000),
+            setTimeout(() => {
+                setNavbarZIndex(9999);
+            }, 4000)
         ];
 
         return () => {
@@ -166,11 +174,7 @@ function MainContent() {
                         setModelScale(2); // Adjusted scale
                         setModelRotation([-2, Math.PI * scrollProgress * 2, 0]);
                         break;
-                    case "projects":
-                        targetPosition = new Vector3(2, 3, 1);
-                        setModelScale(1.8);
-                        setModelRotation([0, Math.PI * 0.5, 0]);
-                        break;
+                  
                     case "Skill":
                         targetPosition = new Vector3(-5.5,3, 7.2);
                         setModelScale(1);
@@ -210,7 +214,14 @@ function MainContent() {
 
     return (
         <>
-            <Navbar style={{ zIndex: 50 }} />
+            
+            <Navbar style={{ 
+                zIndex: navbarZIndex, 
+                position: "fixed", 
+                top: 0, 
+                width: "100%", 
+                pointerEvents: "auto" 
+            }} />
             
             {/* Sections */}
             {["home", "about", "projects", "Skill", "contact"].map((sectionId) => (
@@ -231,7 +242,8 @@ function MainContent() {
                         backgroundRepeat: "no-repeat", 
                         transition: "background-image 1s ease-in-out", 
                         zIndex: 10,
-                        marginTop: sectionId === 'home' ? "80px" : "0" // Add padding to home section to prevent navbar overlap
+                        marginTop: sectionId === 'home' ? "80px" : "0", // Add padding to home section to prevent navbar overlap
+                        pointerEvents: "auto" // Ensure sections receive pointer events
                     }}
                 >
                     {activeSection === sectionId && {
@@ -253,10 +265,11 @@ function MainContent() {
                     transform: "translate(-50%, -50%)", 
                     fontSize: "3rem", 
                     color: "white", 
-                    zIndex: 10000, 
+                    zIndex: 9999, // Lower than navbar
                     textAlign: "center", 
                     opacity: showText ? 1 : 0, 
-                    transition: "opacity 1s ease-in-out" 
+                    transition: "opacity 1s ease-in-out",
+                    pointerEvents: "none" // Prevent blocking clicks
                 }}>
                     <b>Welcome to the 3D Experience</b>
                 </div>
@@ -272,8 +285,8 @@ function MainContent() {
                     />
                     <ButtonContainer style={{left:"15rem"}} 
                         onClick={() => navigate('/talk')}
-                                                            
-                    text="Talk To Me" />
+                        text="Talk To Me" 
+                    />
                 </>
             )}
 
@@ -287,7 +300,7 @@ function MainContent() {
                 backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity})`, 
                 transition: "background-color 3s ease-in-out", 
                 zIndex: 2000, 
-                pointerEvents: "none" 
+                pointerEvents: "none" // Ensure overlay doesn't block clicks
             }} />
 
             {/* Main 3D Scene */}
@@ -310,7 +323,7 @@ function MainContent() {
                     fadeOpacity={fadeOpacity}
                 />
             )}
-            {activeSection === "Skill"   && (
+            {activeSection === "Skill" && (
                 <BookCamera
                     LazyName1={LazyName1}
                 />
