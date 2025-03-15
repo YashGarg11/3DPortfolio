@@ -6,6 +6,7 @@ import styles from "./navbar.module.css";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [zIndexHigh, setZIndexHigh] = useState(false);
 
   // Handle navbar background on scroll
   useEffect(() => {
@@ -14,6 +15,15 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle z-index transition after 4 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setZIndexHigh(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClick = (e, sectionId) => {
@@ -32,8 +42,19 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const navStyle = {
+    zIndex: zIndexHigh ? 3001 : 9,
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    transition: 'background-color 0.3s ease-in-out'
+  };
+
   return (
-    <nav className={`navbar navbar-expand-lg fixed-top ${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+    <nav 
+      className={`navbar navbar-expand-lg fixed-top ${styles.navbar} ${scrolled ? styles.scrolled : ""}`}
+      style={navStyle}
+    >
       <div className="container">
         {/* Brand Logo */}
         <a className={`navbar-brand ${styles.brand}`} href="#home">

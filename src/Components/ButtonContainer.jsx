@@ -7,7 +7,7 @@ const ButtonContainer = ({ style, text, onClick }) => {
       position: 'absolute',
       top: '80%',
       transform: 'translateY(-50%)',
-      zIndex: 1999,
+      zIndex: 2999,
       pointerEvents: 'auto',
       ...style
     }}>

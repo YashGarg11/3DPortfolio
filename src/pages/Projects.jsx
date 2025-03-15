@@ -48,15 +48,17 @@ export default function Projects() {
       description: "Description of Project 1",
       fullDescription: "This is a detailed description of Project 1. It includes information about the technologies used, challenges faced, and solutions implemented.",
       image: "/t2.png",
-      demoUrl: "https://sketchfab.com/3d-models/saturn-8f98132d421848aeb12e2165a81838b6",
-      sourceCode: "https://github.com/yourusername/project1"
+      image2: "/sat.gif",
+      demoUrl: "https://youtu.be/OLyy5YFmgqE?si=j8l63gtSlXy-l-ah",
+
+      sourceCode: "https://sketchfab.com/3d-models/saturn-8f98132d421848aeb12e2165a81838b6"
     },
     {
       id: 2,
       title: "Project 2",
       description: "Description of Project 2",
       fullDescription: "This is a detailed description of Project 2. It includes information about the technologies used, challenges faced, and solutions implemented.",
-      image: "/project2.jpg",
+      image: "/solarsystem.png",
       demoUrl: "https://demo2.com",
       sourceCode: "https://github.com/yourusername/project2"
     },
@@ -65,7 +67,7 @@ export default function Projects() {
       title: "Project 3",
       description: "Description of Project 3",
       fullDescription: "This is a detailed description of Project 3. It includes information about the technologies used, challenges faced, and solutions implemented.",
-      image: "/project3.jpg",
+      image: "hospital.png",
       demoUrl: "https://demo3.com",
       sourceCode: "https://github.com/yourusername/project3"
     },
@@ -74,7 +76,7 @@ export default function Projects() {
       title: "Project 4",
       description: "Description of Project 4",
       fullDescription: "This is a detailed description of Project 4. It includes information about the technologies used, challenges faced, and solutions implemented.",
-      image: "/project4.jpg",
+      image: "texture.png",
       demoUrl: "https://demo4.com",
       sourceCode: "https://github.com/yourusername/project4"
     },
@@ -83,7 +85,7 @@ export default function Projects() {
       title: "Project 5",
       description: "Description of Project 5",
       fullDescription: "This is a detailed description of Project 5. It includes information about the technologies used, challenges faced, and solutions implemented.",
-      image: "/project5.jpg",
+      image: "/movie_app.png",
       demoUrl: "https://demo5.com",
       sourceCode: "https://github.com/yourusername/project5"
     },
@@ -92,7 +94,7 @@ export default function Projects() {
       title: "Project 6",
       description: "Description of Project 6",
       fullDescription: "This is a detailed description of Project 6. It includes information about the technologies used, challenges faced, and solutions implemented.",
-      image: "/project6.jpg",
+      image: "/multi_game.webp",
       demoUrl: "https://demo6.com",
       sourceCode: "https://github.com/yourusername/project6"
     }
@@ -140,7 +142,7 @@ export default function Projects() {
   };
 
   const detailsCardStyle = {
-    backgroundColor: "rgba(19, 12, 12, 0.66)",
+    
     border: "2px solid #10cedf",
     borderRadius: "20px",
     padding: "40px",
@@ -389,9 +391,9 @@ export default function Projects() {
                 >
                   <div style={imageWrapperStyle}>
                     <img 
-                      src={selectedProject.image} 
+                      src={selectedProject.image2} 
                       alt={selectedProject.title}
-                      style={imageStyle}
+                      style={{...imageStyle, width: "100%", height: "350px"}}
                     />
                     
                     {/* Quick action links */}
@@ -474,6 +476,7 @@ export default function Projects() {
                 {group.map((project) => (
                   <motion.div
                     key={project.id}
+                    
                     whileHover={{ 
                       y: -10,
                       scale: 1.05,
@@ -488,7 +491,13 @@ export default function Projects() {
                       duration: 0.8,
                       delay: 0.1 * (project.id % getProjectsPerSlide())
                     }}
-                    style={projectCardStyle}
+                    style={{
+                      ...projectCardStyle,
+                      backgroundImage: `url(${project.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat"
+                    }}
                     onClick={() => handleProjectSelect(project)}
                   >
                     <h3 style={projectCardTitleStyle}>{project.title}</h3>

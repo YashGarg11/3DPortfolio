@@ -51,11 +51,8 @@ function MainContent() {
         document.body.style.overflow = "hidden";
         setFadeOpacity(1);
 
-        // Reset any body styles that might cause whitespace
         document.body.style.margin = "0";
         document.body.style.padding = "0";
-        
-        // Apply a style to html and body to prevent whitespace
         document.documentElement.style.height = "100%";
         document.body.style.height = "100%";
         document.body.style.minHeight = "100vh";
@@ -80,14 +77,10 @@ function MainContent() {
             setTimeout(() => {
                 setIsnavbarshow(true);
             }, 7000),
-            setTimeout(() => {
-                setNavbarZIndex(9999);
-            }, 4000)
         ];
 
         return () => {
             timeouts.forEach(timeout => clearTimeout(timeout));
-            // Cleanup when component unmounts
             document.body.style.overflow = "auto";
         };
     }, []);
@@ -214,14 +207,7 @@ function MainContent() {
 
     return (
         <>
-            
-            <Navbar style={{ 
-                zIndex: navbarZIndex, 
-                position: "fixed", 
-                top: 0, 
-                width: "100%", 
-                pointerEvents: "auto" 
-            }} />
+            <Navbar />
             
             {/* Sections */}
             {["home", "about", "projects", "Skill", "contact"].map((sectionId) => (
