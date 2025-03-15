@@ -391,7 +391,7 @@ export default function Projects() {
                 >
                   <div style={imageWrapperStyle}>
                     <img 
-                      src={selectedProject.image2} 
+                      src={selectedProject.image} 
                       alt={selectedProject.title}
                       style={{...imageStyle, width: "100%", height: "350px"}}
                     />

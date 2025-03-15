@@ -216,7 +216,7 @@ function MainContent() {
                     id={sectionId} 
                     style={{ 
                         position: "relative", 
-                        width: "100vw", 
+                        width: "99vw", 
                         minHeight: "100vh", 
                         backgroundImage: sectionId === 'home' ? 'url("/background.jpg")' :
                           sectionId === 'about' ? 'url("/backgrounda2.jpg")' :
@@ -321,14 +321,14 @@ function MainContent() {
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<MainContent />} />
-            <Route path="/hire-me" element={<HireMe />} />
-            <Route path="/talk" element={<Talk />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/skill" element={<Skill />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/3DPortfolio/" element={<MainContent />} />
+            <Route path="/3DPortfolio/hire-me" element={<HireMe />} />
+            <Route path="/3DPortfolio/talk" element={<Talk />} />
+            <Route path="/3DPortfolio/contact" element={<ContactUs />} />
+            <Route path="/3DPortfolio/projects" element={<Projects />} />
+            <Route path="/3DPortfolio/about" element={<About />} />
+            <Route path="/3DPortfolio/skill" element={<Skill />} />
+            <Route path="/3DPortfolio/home" element={<Home />} />
         </Routes>
     );
 }
