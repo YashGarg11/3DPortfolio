@@ -215,8 +215,8 @@ export default function About() {
               gap: "20px",
               marginTop: "20px"
             }}>
-              <motion.a 
-                href="https://github.com/yashgarg1703" 
+              <motion.a
+                href="https://github.com/yashgarg1703"
                 target="_blank"
                 whileHover={{ scale: 1.2 }}
                 style={{

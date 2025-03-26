@@ -6,7 +6,7 @@ export default function Skill() {
   return (
     <section ref={ref} id="Skill" className="page">
       <h1 style={{color: "white"}}>Skills are here</h1>
-      <p style={{color: "white"}} >These are my skills</p>
+      <p style={{color: "white"}}>These are my skills</p>
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import { useAnimations, useGLTF } from "@react-three/drei";
+import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect } from "react";
 import * as THREE from "three";
 
@@ -36,6 +36,7 @@ export default function skill_book() {
 <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
 <directionalLight position={[-5, 5, 5]} intensity={0.5} castShadow />
 <directionalLight position={[0, 10, 5]} intensity={0.5} castShadow />
+<OrbitControls></OrbitControls>
     
     <primitive object={scene} 
                 scale={2}
