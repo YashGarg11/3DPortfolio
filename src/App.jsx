@@ -33,7 +33,6 @@ function MainContent() {
     const [fadeOpacity, setFadeOpacity] = useState(1);
     const [previousSection, setPreviousSection] = useState("home");
     const [transitionProgress, setTransitionProgress] = useState(0);
-   
     const [navbarZIndex, setNavbarZIndex] = useState(10);
 
     const lightProps = useSpring({

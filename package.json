@@ -28,6 +28,7 @@
     "react-intersection-observer": "^9.8.1",
     "react-router-dom": "^6.22.1",
     "react-scroll": "^1.9.0",
+    "styled-jsx": "^5.1.6",
     "three": "^0.161.0",
     "typed.js": "^2.1.0"
   },

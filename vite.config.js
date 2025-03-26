@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/3DPortfolio/', // add this line
+  base: '/', // Changed for Netlify (Remove '/3DPortfolio/')
   plugins: [react()],
   build: {
     outDir: 'dist',
