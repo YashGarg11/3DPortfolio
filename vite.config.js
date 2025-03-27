@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/3DPortfolio/', // Updated to match the actual repository name
+  base: '/', // Updated for Vercel deployment
   plugins: [react()],
   build: {
     outDir: 'dist',
