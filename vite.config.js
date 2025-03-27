@@ -5,6 +5,10 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: '/', // Updated for Vercel deployment
   plugins: [react()],
+  define: {
+    // Prevent "process is not defined" errors in production build
+    'process.env': {}
+  },
   build: {
     outDir: 'dist',
     rollupOptions: {

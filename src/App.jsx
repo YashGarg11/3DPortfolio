@@ -1,4 +1,3 @@
-import { useSpring } from "@react-spring/three";
 import { lazy, useEffect, useRef, useState } from "react";
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Vector3 } from 'three';
@@ -14,6 +13,7 @@ import Home from "./pages/home";
 import Projects from "./pages/Projects";
 import Skill from "./pages/Skill";
 import Talk from "./pages/Talk";
+import useIsomorphicSpring from "./utils/useIsomorphicSpring";
 const LazyName = lazy(() => import("./Components/pr"));
 const LazyName1 = lazy(() => import("./Components/skill_book"));
 function MainContent() {
@@ -35,12 +35,12 @@ function MainContent() {
     const [transitionProgress, setTransitionProgress] = useState(0);
     const [navbarZIndex, setNavbarZIndex] = useState(10);
 
-    const lightProps = useSpring({
+    const lightProps = useIsomorphicSpring({
         lightIntensity: startAnimation ? 1.2 : 0.1,
         config: { duration: 3000 },
     });
 
-    const modelScaleSpring = useSpring({
+    const modelScaleSpring = useIsomorphicSpring({
         scale: startAnimation ? 0.5 : 3,
         config: { duration: 7000 },
     });
