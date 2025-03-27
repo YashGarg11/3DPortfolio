@@ -1,13 +1,42 @@
-import { a } from '@react-spring/three';
+import React from 'react';
 
-// In SSR environments, return a standard component
-// In browser environments, return the animated version
+// Check if we're in a browser environment
 const isBrowser = typeof window !== 'undefined';
 
+// Check if React is properly initialized
+const isReactAvailable = typeof React !== 'undefined' && React !== null;
+
+// Import animated components only if in browser
+let a;
+if (isBrowser && isReactAvailable) {
+  try {
+    // Dynamic import to avoid SSR issues
+    const reactSpring = require('@react-spring/three');
+    a = reactSpring.a;
+  } catch (error) {
+    console.error('Error importing @react-spring/three:', error);
+    // Provide fallback components
+    a = {
+      ambientLight: 'ambientLight',
+      directionalLight: 'directionalLight',
+      group: 'group',
+      mesh: 'mesh'
+    };
+  }
+} else {
+  // Fallback for SSR
+  a = {
+    ambientLight: 'ambientLight',
+    directionalLight: 'directionalLight',
+    group: 'group',
+    mesh: 'mesh'
+  };
+}
+
 export const SafeAnimated = {
-  ambientLight: isBrowser ? a.ambientLight : 'ambientLight',
-  directionalLight: isBrowser ? a.directionalLight : 'directionalLight',
-  group: isBrowser ? a.group : 'group',
-  mesh: isBrowser ? a.mesh : 'mesh',
+  ambientLight: isBrowser && isReactAvailable && a ? a.ambientLight : 'ambientLight',
+  directionalLight: isBrowser && isReactAvailable && a ? a.directionalLight : 'directionalLight',
+  group: isBrowser && isReactAvailable && a ? a.group : 'group',
+  mesh: isBrowser && isReactAvailable && a ? a.mesh : 'mesh',
   // Add more as needed
 }; 

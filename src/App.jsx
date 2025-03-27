@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Vector3 } from 'three';
 import BookCamera from "./Components/book_camera";
 import ButtonContainer from "./Components/ButtonContainer";
+import ClientOnly from "./Components/ClientOnly";
 import ContactUs from "./Components/Contact-us";
 import MainScene from "./Components/MainScene";
 import NameScene from "./Components/NameScene";
@@ -13,6 +14,7 @@ import Home from "./pages/home";
 import Projects from "./pages/Projects";
 import Skill from "./pages/Skill";
 import Talk from "./pages/Talk";
+import { SafeSpringProvider } from "./utils/SafeSpringProvider";
 import useIsomorphicSpring from "./utils/useIsomorphicSpring";
 const LazyName = lazy(() => import("./Components/pr"));
 const LazyName1 = lazy(() => import("./Components/skill_book"));
@@ -317,19 +319,29 @@ function MainContent() {
     );
 }
 
-function App() {
+// Wrap the entire app in safe providers
+const App = () => {
     return (
-        <Routes>
-            <Route path="/" element={<MainContent />} />
-            <Route path="/hire-me" element={<HireMe />} />
-            <Route path="/talk" element={<Talk />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/skill" element={<Skill />} />
-            <Route path="/home" element={<Home />} />
-        </Routes>
+        <ClientOnly>
+            <SafeSpringProvider value={{ 
+                tension: 170, 
+                friction: 26, 
+                mass: 1, 
+                immediate: false 
+            }}>
+                <Routes>
+                    <Route path="/" element={<MainContent />} />
+                    <Route path="/hire-me" element={<HireMe />} />
+                    <Route path="/talk" element={<Talk />} />
+                    <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/projects" element={<Projects />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/skill" element={<Skill />} />
+                    <Route path="/home" element={<Home />} />
+                </Routes>
+            </SafeSpringProvider>
+        </ClientOnly>
     );
-}
+};
 
 export default App;
