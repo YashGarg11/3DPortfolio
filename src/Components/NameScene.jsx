@@ -16,14 +16,14 @@ const CameraControl = () => {
 
 const NameScene = ({ LazyName, fadeOpacity }) => {
     return (
-        <div style={{ 
-            position: "absolute", 
-            top: "5%",  
+        <div style={{
+            position: "absolute",
+            top: "5%",
             width: "100vw",
-            height: "100vh", 
-            zIndex: 3000, 
+            height: "100vh",
+            zIndex: 3000,
             opacity: fadeOpacity,
-            transition: "opacity 2s ease-in-out" 
+            transition: "opacity 2s ease-in-out"
         }}>
             <Canvas style={{ width: "100%", height: "100%" }}>
                 <Suspense fallback={null}>

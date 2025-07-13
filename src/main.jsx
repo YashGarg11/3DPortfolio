@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 import App from "./App";
+import "./index.css";
 
 // Defensive check for React and ReactDOM
 const isReactAvailable = typeof React !== 'undefined' && React !== null;
@@ -12,10 +13,10 @@ const isDocumentAvailable = typeof document !== 'undefined' && document !== null
 if (isReactAvailable && isReactDOMAvailable && isDocumentAvailable) {
   try {
     const rootElement = document.getElementById("root");
-    
+
     if (rootElement) {
       const root = ReactDOM.createRoot(rootElement);
-      
+
       root.render(
         <HashRouter>
           <App />

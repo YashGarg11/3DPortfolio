@@ -1,302 +1,424 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { FaEnvelope, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { useInView } from "react-intersection-observer";
+import gsap from 'gsap';
+import { useEffect, useRef, useState } from 'react';
+import {
+  SiAdobephotoshop,
+  SiBit,
+  SiBlender,
+  SiCircleci, SiCloudinary,
+  SiCss3,
+  SiDocker,
+  SiExpress,
+  SiFastapi,
+  SiFigma,
+  SiFramer,
+  SiGit,
+  SiHtml5,
+  SiMongodb,
+  SiMysql,
+  SiNodedotjs,
+  SiPostgresql,
+  SiPostman,
+  SiReact,
+  SiSketchfab,
+  SiSocketdotio,
+  SiTailwindcss,
+  SiVercel,
+  SiVite,
+  SiWebgl,
+  SiWebpack
+} from 'react-icons/si';
 
-export default function About() {
+import { DiAws, DiVisualstudio } from 'react-icons/di'; // AWS and VS Code replacements
+import { FaCube, FaServer, FaWaveSquare } from 'react-icons/fa'; // GSAP & Three.js placeholders
 
-  const { ref, inView } = useInView({ triggerOnce: true });
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+import CardSwap, { Card } from './CardSwap';
+import FlowingMenu from './FlowingMenu';
+import RotatingText from './RotatingText';
+
+const About = () => {
+  const textRef = useRef(null);
+  const desRef = useRef(null);
+  const imageRef2 = useRef(null);
+  const stackRef = useRef(null);
+  const servicesRef = useRef(null);
+
+  // Stack data organized by categories with continuous animation
+  const stackCategories = [
+    {
+      name: 'Frontend',
+      items: [
+        { text: 'React', icon: SiReact },
+        { text: 'GSAP', icon: FaWaveSquare },
+        { text: 'Framer Motion', icon: SiFramer },
+        { text: 'React-Bit', icon: SiBit },
+        { text: 'Tailwind CSS', icon: SiTailwindcss },
+        { text: 'HTML5', icon: SiHtml5 },
+        { text: 'CSS3', icon: SiCss3 }
+      ]
+    },
+    {
+      name: 'Backend',
+      items: [
+        { text: 'Node.js', icon: SiNodedotjs },
+        { text: 'Express', icon: SiExpress },
+        { text: 'MongoDB', icon: SiMongodb },
+        { text: 'RestAPI', icon: FaServer },
+        { text: 'FastAPI', icon: SiFastapi },
+        { text: 'AWS', icon: DiAws },
+        { text: 'Multer', icon: FaServer },
+        { text: 'WebSocket', icon: SiSocketdotio }
+      ]
+    },
+    {
+      name: 'Database',
+      items: [
+        { text: 'MongoDB', icon: SiMongodb },
+        { text: 'PostgreSQL', icon: SiPostgresql },
+        { text: 'MySQL', icon: SiMysql },
+        { text: 'DynamoDB', icon: DiAws }
+      ]
+    },
+    {
+      name: 'Cloud & DevOps',
+      items: [
+        { text: 'AWS', icon: DiAws },
+        { text: 'Docker', icon: SiDocker },
+        { text: 'CI/CD', icon: SiCircleci },
+        { text: 'Cloudinary', icon: SiCloudinary },
+        { text: 'Vercel', icon: SiVercel }
+      ]
+    },
+    {
+      name: '3D & Animation',
+      items: [
+        { text: 'Three.js', icon: FaCube },
+        { text: 'GSAP', icon: FaWaveSquare },
+        { text: 'Framer Motion', icon: SiFramer },
+        { text: 'WebGL', icon: SiWebgl },
+        { text: 'Blender', icon: SiBlender },
+        { text: 'Sketchfab', icon: SiSketchfab }
+      ]
+    },
+    {
+      name: 'Tools & Others',
+      items: [
+        { text: 'Git', icon: SiGit },
+        { text: 'VS Code', icon: DiVisualstudio },
+        { text: 'Figma', icon: SiFigma },
+        { text: 'Photoshop', icon: SiAdobephotoshop },
+        { text: 'Postman', icon: SiPostman },
+        { text: 'Webpack', icon: SiWebpack },
+        { text: 'Vite', icon: SiVite }
+      ]
+    }
+  ];
+
+  const [activeStack, setActiveStack] = useState(0);
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#about",
+        start: "top 80%",
+        toggleActions: "play none none reverse",
+      }
+    });
 
-    window.addEventListener("resize", handleResize);
+    // Animate About heading
+    tl.fromTo(textRef.current, { opacity: 0, y: 50 }, {
+      opacity: 1,
+      y: 0,
+      duration: 2,
+      ease: 'power2.out',
+    });
+
+    // Animate Description Block
+    tl.fromTo(desRef.current, { opacity: 0, y: 50 }, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'power2.out',
+    });
+
+    // Animate Stack Section
+    tl.fromTo(stackRef.current, { opacity: 0, y: 50 }, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'power2.out',
+    }, "-=0.5");
+
+    // Animate Services Section
+    tl.fromTo(servicesRef.current, { opacity: 0, y: 50 }, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'power2.out',
+    }, "-=0.5");
+
+    // Animate floating image
+    tl.fromTo(imageRef2.current,
+      { opacity: 0, x: 100 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 2,
+        ease: 'power2.out',
+      },
+      "<"
+    );
+
+    // Continuous floating animation
+    gsap.to(imageRef2.current, {
+      y: '-=15',
+      duration: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+
+    // Auto-rotate stack categories
+    const stackInterval = setInterval(() => {
+      setActiveStack((prev) => (prev + 1) % stackCategories.length);
+    }, 4000);
+
     return () => {
-      window.removeEventListener("resize", handleResize);
+      clearInterval(stackInterval);
     };
   }, []);
 
-  useEffect(() => {
-    // Reset any body styles that might cause whitespace
-    document.body.style.margin = "0";
-    document.body.style.padding = "0";
-    document.body.style.overflow = "auto";
-    
-    // Apply a style to html and body to prevent whitespace
-    document.documentElement.style.height = "100%";
-    document.body.style.height = "100%";
-    document.body.style.minHeight = "100vh";
-    
-    return () => {
-      // Cleanup when component unmounts
-      document.body.style.overflow = "auto";
-    };
-  }, []);
-
-  const isMobile = windowWidth < 768;
-  const isTablet = windowWidth >= 768 && windowWidth < 1024;
-
-  // Log window width to debug responsive behavior
-  useEffect(() => {
-    console.log("Current window width:", windowWidth);
-    console.log("isMobile:", isMobile);
-    console.log("isTablet:", isTablet);
-  }, [windowWidth, isMobile, isTablet]);
-  
   return (
-    <section ref={ref} id="about" className="page">
-      <div className="about-container" style={{ 
-        backgroundColor: "rgb(19, 12, 12)",
-        border: "2px solid aqua",
-        opacity: 0.9,
-        width: "80%",
-        minHeight: "80vh",
-        borderRadius: "20px",
-        marginLeft:"10%",
-        padding: "30px",
-        position: "relative",
-        zIndex: 10,
-        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.5)",
-        backdropFilter: "blur(5px)",
-        transform: inView ? "translateY(80px)" : "translateY(50px)",
-        transition: "transform 0.8s ease-out"
-      }}>
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            height: "100%",
-            gap: "30px"
-          }}
-        >
-          {/* Left side - Photo Frame */}
-          <motion.div
-            className="photo-frame"
-            initial={{ scale: 0.95, x: -50 }}
-            animate={{ 
-              scale: [0.95, 1.05, 0.95],
-              x: 0,
-             
-            }}
-            transition={{
-              x: { duration: 2 },
-              scale: {
-                repeat: Infinity,
-                duration: 3,
-                ease: "easeInOut"
-              }
-            }}
-            style={{
-              borderRadius: "12px",
-              overflow: "hidden",
-              width: isMobile ? "220px" : isTablet ? "280px" : "340px",
-              height: isMobile ? "300px" : isTablet ? "370px" : "500px",
-              border: "2px solid aqua",
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.5)",
-              position: "relative",
-              padding: "0", // Removed padding to allow image to fill completely
-              flex: isMobile ? "none" : "0 0 35%"
-            }}
-          >
-            <div style={{
-              width: "100%",
-              height: "100%",
-              overflow: "hidden",
-              borderRadius: "10px", // Adjusted to match parent's border-radius
-              position: "relative"
-            }}>
-              <img 
-                src="/yash1.jpg" 
-                alt="Yash Garg" 
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover", // Added to ensure image properly fills the container
-                  objectPosition: "center",
-                  transition: "transform 0.5s ease",
-                  display: "block" // Ensures no extra space below image
-                }}
-              />
-              <div style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%)",
-                padding: "20px",
-                textAlign: "center"
-              }}>
-                <h3 style={{ 
-                  color: "#fff", 
-                  marginBottom: "0.5rem",
-                  fontSize: isMobile ? "1.5rem" : "1.8rem",
-                  textShadow: "0 2px 4px rgba(0,0,0,0.5)"
-                }}>
-                  Yash Garg
-                </h3>
-                <p style={{ 
-                  color: "#10cedf", 
-                  margin: 0,
-                  fontSize: isMobile ? "1rem" : "1.2rem",
-                  fontWeight: "500"
-                }}>
-                  3D-Developer & Designer
-                </p>
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Right side - About Me Text */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            style={{
-              flex: isMobile ? "none" : "0 0 60%",
-              background: "rgba(10, 10, 10, 0.7)",
-              borderRadius: "12px",
-              padding: "25px",
-              color: "white",
-              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(16, 206, 223, 0.6)",
-              border: "2px solid aqua"
-            }}
-          >
-            <h2 style={{
-              fontSize: isMobile ? "1.8rem" : "2.2rem",
-              marginBottom: "20px",
-              color: "#10cedf",
-              borderBottom: "2px solid rgba(16, 206, 223, 0.5)",
-              paddingBottom: "10px",
-              textShadow: "0 0 10px rgba(16, 206, 223, 0.5)"
-            }}>
-              About Me
-            </h2>
-            
-            <p style={{
-              fontSize: isMobile ? "1rem" : "1.1rem",
-              lineHeight: "1.6",
-              marginBottom: "20px"
-            }}>
-              I'm a passionate 3D Developer and Designer with expertise in creating immersive digital experiences. 
-              My work combines technical skills with creative vision to build engaging interactive applications and stunning visual designs.
-            </p>
-            
-            <p style={{
-              fontSize: isMobile ? "1rem" : "1.1rem",
-              lineHeight: "1.6",
-              marginBottom: "20px"
-            }}>
-              As a MERN stack developer, I build robust web applications using MongoDB, Express.js, React, and Node.js.
-              I enjoy creating seamless user experiences with responsive front-end designs and efficient back-end solutions.
-            </p>
-            
-            <p style={{
-              fontSize: isMobile ? "1rem" : "1.1rem",
-              lineHeight: "1.6",
-              marginBottom: "30px"
-            }}>
-              With a background in both development and design, I bring a unique perspective to every project, 
-              ensuring both functionality and aesthetics are given equal importance.
-            </p>
-            
-            {/* Social Media Icons */}
-            <div style={{
-              marginBottom:isMobile ? "60px" : "0px",
-              display: "flex",
-              gap: "20px",
-              marginTop: "20px"
-            }}>
-              <motion.a
-                href="https://github.com/yashgarg1703"
-                target="_blank"
-                whileHover={{ scale: 1.2 }}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  background: "#333",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  textDecoration: "none",
-                  boxShadow: "0 0 15px rgba(16, 206, 223, 0.7)"
-                }}
-              >
-                <FaGithub />
-              </motion.a>
-              
-              <motion.a 
-                href="https://linkedin.com/in/yash-garg-1703" 
-                target="_blank"
-                whileHover={{ scale: 1.2 }}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  background: "#0077B5",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  textDecoration: "none",
-                  boxShadow: "0 0 15px rgba(16, 206, 223, 0.7)"
-                }}
-              >
-                <FaLinkedin />
-              </motion.a>
-              
-              <motion.a 
-                href="https://twitter.com/yashgarg1703" 
-                target="_blank"
-                whileHover={{ scale: 1.2 }}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  background: "#1DA1F2",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  textDecoration: "none",
-                  boxShadow: "0 0 15px rgba(16, 206, 223, 0.7)"
-                }}
-              >
-                <FaTwitter />
-              </motion.a>
-              
-              <motion.a 
-                href="mailto:yashgarg1703@gmail.com"
-                whileHover={{ scale: 1.2 }}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  background: "#EA4335",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  textDecoration: "none",
-                  boxShadow: "0 0 15px rgba(16, 206, 223, 0.7)"
-                }}
-              >
-                <FaEnvelope />
-              </motion.a>
-            </div>
-          </motion.div>
-        </motion.div>
+    <div
+      id="about"
+      className="relative bg-black w-full min-h-screen overflow-hidden px-4 pt-24 scroll-mt-24"
+    >
+      {/* Heading Section */}
+      <div className="flex flex-row justify-center items-center mb-10 space-y-4">
+        <p ref={textRef} className="text-white text-4xl sm:text-5xl md:text-7xl font-bold">
+          About
+        </p>
+        <RotatingText
+          texts={['Me', 'Full-Stack-Developer', '3DDeveloper', 'UI/UX Designer', 'Cloud Engineer']}
+          mainClassName="px-2 sm:px-4 md:px-6 bg-cyan-300 text-black overflow-hidden py-1 sm:py-2 md:py-3 justify-center rounded-lg text-3xl sm:text-4xl md:text-6xl font-bold"
+          staggerFrom="end"
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          exit={{ y: "-120%" }}
+          staggerDuration={0.025}
+          splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+          transition={{ type: "spring", damping: 30, stiffness: 400 }}
+          rotationInterval={2000}
+        />
       </div>
-    </section>
+
+      {/* Description Box */}
+      <div className="flex justify-center items-center">
+        <div
+          ref={desRef}
+          className="relative text-white text-center text-base sm:text-xl md:text-2xl lg:text-3xl px-4 py-14 sm:py-20 w-full max-w-5xl backdrop-blur-sm bg-white/5 border border-white/10 shadow-md mt-10"
+        >
+          <p className="mb-4">I am a passionate Full-Stack Developer with a keen interest in creating dynamic and responsive web applications.</p>
+          <p className="mb-4">My journey in web development has equipped me with a diverse skill set, enabling me to tackle complex challenges and deliver high-quality solutions.</p>
+          <p>I thrive on learning new technologies and continuously improving my craft.</p>
+        </div>
+      </div>
+
+      {/* Flowing Tech Stack Section */}
+      <div ref={stackRef} className="mt-20 mb-20">
+        <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12">
+          My <span className="text-cyan-300">Tech Stack</span>
+        </h2>
+
+        {/* Stack Categories Navigation */}
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {stackCategories.map((category, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveStack(index)}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${activeStack === index
+                ? 'bg-cyan-300 text-black shadow-lg shadow-cyan-300/50'
+                : 'bg-white/10 text-white hover:bg-white/20'
+                }`}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+
+        {/* FlowingMenu for Stack Items */}
+        <div className="max-w-6xl mx-auto">
+          <div style={{ height: '600px', position: 'relative' }}>
+            <FlowingMenu items={stackCategories[activeStack].items} />
+          </div>
+        </div>
+      </div>
+
+      {/* Services Section with CardSwap */}
+      <div ref={servicesRef} className="mt-20 pb-20">
+        <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12">
+          My <span className="text-cyan-300">Services</span>
+        </h2>
+
+        <div className="max-w-4xl mx-auto">
+
+          <div className="relative min-h-[400px] sm:min-h-[600px]">
+
+
+            <CardSwap
+              cardDistance={60}
+              verticalDistance={70}
+              delay={500}
+              pauseOnHover={false}
+            >
+              {/* Full-Stack Development */}
+              <Card>
+                <div className="p-8 backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl h-full">
+                  <div className="text-4xl mb-4"><img src='MERN-logo.png' className="w-60 h-26" alt="MERN Stack Logo" /></div>
+                  <h3 className="text-white text-3xl font-bold mb-4 text-cyan-300">
+                    Full-Stack Development
+                  </h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">
+                    I specialize in building dynamic web applications using the MERN stack and modern frameworks,
+                    ensuring responsive design and seamless user experience.
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      'React / Next.js with server-side rendering',
+                      'Node.js & Express APIs with authentication',
+                      'MongoDB & Mongoose schema design',
+                      'RESTful architecture & error handling'
+                    ].map((feature, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-400">
+                        <div className="w-1 h-1 bg-cyan-300 rounded-full mr-2"></div>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+
+              {/* 3D Web Development */}
+              <Card>
+                <div className="p-8 backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl h-full">
+                  <div className="text-6xl mb-4">🧑‍💻</div>
+                  <h3 className="text-white text-3xl font-bold mb-4 text-cyan-300">
+                    3D Web Development
+                  </h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">
+                    I create immersive 3D user experiences using powerful libraries like Three.js and WebGL.
+                    Perfect for portfolios, product showcases, or metaverse apps.
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      'Three.js + React integration (R3F)',
+                      'GPU-accelerated rendering via WebGL',
+                      'Custom 3D models using Blender',
+                      'Performance-optimized scenes with lighting & shadows'
+                    ].map((feature, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-400">
+                        <div className="w-1 h-1 bg-cyan-300 rounded-full mr-2"></div>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+
+              {/* UI/UX Design */}
+              <Card>
+                <div className="p-8 backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl h-full">
+                  <div className="text-5xl mb-4">✨</div>
+                  <h3 className="text-white text-3xl font-bold mb-4 text-cyan-300">
+                    UI/UX Design
+                  </h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">
+                    Beautifully crafted designs with Figma and modern UI libraries,
+                    focused on accessibility, responsiveness, and visual storytelling.
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      'Component-based design in Figma',
+                      'Mobile-first, responsive layouting',
+                      'User-centered interaction flow',
+                      'Animation with GSAP and Framer Motion'
+                    ].map((feature, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-400">
+                        <div className="w-1 h-1 bg-cyan-300 rounded-full mr-2"></div>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+
+              {/* Cloud Engineering */}
+              <Card>
+                <div className="p-8 backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl h-full">
+                  <div className="text-5xl mb-4">☁️</div>
+                  <h3 className="text-white text-3xl font-bold mb-4 text-cyan-300">
+                    Cloud Engineering
+                  </h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">
+                    I build and deploy cloud-native apps on AWS, ensuring scalability,
+                    speed, and cost-efficiency using DevOps best practices.
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      'AWS S3, EC2, IAM, Route 53 setup',
+                      'Docker containerization & ECR',
+                      'CI/CD with GitHub Actions & Vercel',
+                      'Monitoring & log tracing for reliability'
+                    ].map((feature, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-400">
+                        <div className="w-1 h-1 bg-cyan-300 rounded-full mr-2"></div>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+
+              {/* E-Commerce Solutions */}
+              <Card>
+                <div className="p-8 backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl h-full">
+                  <div className="text-5xl mb-4">🛒</div>
+                  <h3 className="text-white text-3xl font-bold mb-4 text-cyan-300">
+                    E-Commerce Solutions
+                  </h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">
+                    Fully featured e-commerce platforms with custom admin dashboards,
+                    secure payment gateways, and order management.
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      'Stripe/PayPal payment integrations',
+                      'Product catalog & image uploads',
+                      'Inventory & order tracking',
+                      'Admin panel with role-based access'
+                    ].map((feature, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-400">
+                        <div className="w-1 h-1 bg-cyan-300 rounded-full mr-2"></div>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+            </CardSwap>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Image */}
+      <img
+        ref={imageRef2}
+        src="image2.webp"
+        alt="image2"
+        className="absolute w-20 sm:w-38 md:w-52 lg:w-76 object-contain rounded-xl drop-shadow-[0_0_5px_#00ffff] top-[25%] left-[4%] md:left-[6%] lg:left-[0%]"
+      />
+    </div>
   );
-}
+};
+
+export default About;

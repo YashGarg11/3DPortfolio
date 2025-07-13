@@ -6,8 +6,6 @@ import { MeshStandardMaterial } from "three";
 
 const modelUrls = {
   home: "/sci-fi_cube.glb",
-  about: "/ear.glb",
- 
 };
 
 export default function Model1({ scrollProgress, scale, position, rotation = [0, 0, 0], activeSection }) {
@@ -22,21 +20,18 @@ export default function Model1({ scrollProgress, scale, position, rotation = [0,
 
   // Load models
   const { scene: homeScene, animations: homeAnimations } = useGLTF(modelUrls.home);
-  const { scene: aboutScene, animations: aboutAnimations } = useGLTF(modelUrls.about);
-  
+
   // Create animation mixers for each model
   const mixers = useRef({});
-  
+
   const scenes = {
     home: homeScene,
-    about: aboutScene,
-    
+
   };
 
   const animations = {
     home: homeAnimations,
-    about: aboutAnimations,
-    
+
   };
 
   useEffect(() => {
@@ -58,7 +53,7 @@ export default function Model1({ scrollProgress, scale, position, rotation = [0,
           child.material = newMaterial;
         }
       });
-      
+
       // Set up animations for each model if they have animations
       const modelAnimations = animations[modelName];
       if (modelAnimations && modelAnimations.length > 0) {
@@ -66,11 +61,11 @@ export default function Model1({ scrollProgress, scale, position, rotation = [0,
         // Create a mixer manually instead of using useAnimations hook inside a loop
         const mixer = new THREE.AnimationMixer(scene);
         mixers.current[modelName] = mixer;
-        
+
         // Play all animations for this model
         modelAnimations.forEach(clip => {
           if (clip) {
-            
+
             const action = mixer.clipAction(clip);
             action.reset().play();
           }
@@ -81,18 +76,18 @@ export default function Model1({ scrollProgress, scale, position, rotation = [0,
 
   // Handle model transitions
   useEffect(() => {
-    if (activeSection && scenes[activeSection]) {
-      if (!currentModel) {
-        setCurrentModel(scenes[activeSection]);
-        setTransitionProgress(1);
-      } else if (currentModel !== scenes[activeSection]) {
-        setPreviousModel(currentModel);
-        previousModelRef.current = modelRef.current.clone();
-        setCurrentModel(scenes[activeSection]);
-        setTransitionProgress(0);
-      }
+    if (activeSection !== 'home') return;
+
+    if (!currentModel) {
+      setCurrentModel(scenes.home);
+      setTransitionProgress(1);
+    } else if (currentModel !== scenes.home) {
+      setPreviousModel(currentModel);
+      previousModelRef.current = modelRef.current.clone();
+      setCurrentModel(scenes.home);
+      setTransitionProgress(0);
     }
-  }, [activeSection, scenes]);
+  }, [activeSection]);
 
   useFrame((state, delta) => {
     if (modelRef.current) {
@@ -155,25 +150,25 @@ export default function Model1({ scrollProgress, scale, position, rotation = [0,
       />
       {/* Render previous model during transition */}
       {previousModel && transitionProgress < 1 && (
-        <primitive 
-          object={previousModelRef.current} 
-          scale={scale} 
-          position={position} 
-          castShadow 
-          receiveShadow 
-          pointerEvents="none" 
+        <primitive
+          object={previousModelRef.current}
+          scale={scale}
+          position={position}
+          castShadow
+          receiveShadow
+          pointerEvents="none"
         />
       )}
       {/* Render current model */}
       {currentModel && (
-        <primitive 
-          ref={modelRef} 
-          object={currentModel} 
-          scale={scale} 
-          position={position} 
-          castShadow 
-          receiveShadow 
-          pointerEvents="none" 
+        <primitive
+          ref={modelRef}
+          object={currentModel}
+          scale={scale}
+          position={position}
+          castShadow
+          receiveShadow
+          pointerEvents="none"
         />
       )}
     </>
