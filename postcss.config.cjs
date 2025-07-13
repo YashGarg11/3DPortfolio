@@ -1,6 +1,9 @@
-// Rename this file to postcss.config.cjs for CommonJS compatibility
+// postcss.config.cjs
 module.exports = {
   plugins: [
-    require('@tailwindcss/postcss'),
+    require('@tailwindcss/postcss')(), // ✅ now correct
+    require('autoprefixer'),
   ],
 };
+
+
