@@ -454,19 +454,17 @@ const ModernNavbar = () => {
                     background: isActive
                       ? 'rgba(255, 255, 255, 0.2)'
                       : 'transparent',
-                    transform: isActive && !isMobile
-                      ? 'translateY(-2px) scale(1.05)'
-                      : 'translateY(0) scale(1)',
+                    transform: isMobile
+                      ? (isOpen ? 'translateY(0) scale(1)' : 'translateY(-20px) scale(0.9)')
+                      : (isActive ? 'translateY(-2px) scale(1.05)' : 'translateY(0) scale(1)'),
                     boxShadow: isActive
                       ? '0 8px 25px rgba(0, 0, 0, 0.2)'
                       : 'none',
                     width: isMobile ? responsive.itemWidth : 'auto',
                     opacity: isMobile ? (isOpen ? 1 : 0) : 1,
-                    transform: isMobile ?
-                      (isOpen ? 'translateY(0) scale(1)' : 'translateY(-20px) scale(0.9)') :
-                      (isActive ? 'translateY(-2px) scale(1.05)' : 'translateY(0) scale(1)'),
-                    minHeight: isMobile ? '44px' : 'auto' // Better touch target
+                    minHeight: isMobile ? '44px' : 'auto'
                   }}
+
                 >
                   <IconComponent size={responsive.iconSize} />
                   <span>{item.label}</span>
