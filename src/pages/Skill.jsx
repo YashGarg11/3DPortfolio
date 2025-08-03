@@ -131,15 +131,15 @@ const Skill = () => {
 
       </div>
 
-      <h1 className="text-4xl sm:text-6xl font-bold mb-4 text-cyan-400 drop-shadow-2xl relative z-10">
+      <h1 className="text-4xl sm:text-6xl font-bold mb-2 text-cyan-400 drop-shadow-2xl relative z-10">
         Tech Stack & Skills
       </h1>
-      <p className="text-center text-gray-300 mb-12 max-w-2xl relative z-10">
+      <p className="text-center text-gray-300 mb-5 max-w-2xl relative z-10">
         A blend of frontend, backend, cloud, animation and design technologies I work with to deliver high-quality and scalable applications.
       </p>
 
       {/* Category Navigation */}
-      <div className="flex flex-wrap justify-center gap-3 mb-12 relative z-10">
+      <div className="flex flex-wrap justify-center gap-3 mb-4 relative z-10">
         {categories.map((category) => (
           <button
             key={category}
@@ -159,7 +159,7 @@ const Skill = () => {
         key={selectedCategory}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="text-center mb-8 relative z-10"
+        className="text-center relative z-10"
       >
         <h2 className="text-2xl sm:text-3xl font-bold text-white">
           {currentData.icon} {selectedCategory}
@@ -252,7 +252,7 @@ const Skill = () => {
       </AnimatePresence>
 
       {/* Progress Indicator */}
-      <div className="flex justify-center mt-8 space-x-3 relative z-10">
+      <div className="flex justify-center mt-1 space-x-3 relative z-10">
         {categories.map((category, index) => (
           <div
             key={category}

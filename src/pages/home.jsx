@@ -12,8 +12,8 @@ const Home = () => {
   useEffect(() => {
     const updateScale = () => {
       const width = window.innerWidth;
-      if (width <= 768) setScale(0.8);
-      else if (width <= 1024) setScale(1.2);
+      if (width <= 768) setScale(1.1);
+      else if (width <= 1024) setScale(1.4);
       else setScale(2);
     };
 
@@ -129,64 +129,7 @@ const Home = () => {
               Passionate about building impactful digital experiences across web, cloud, and 3D technologies.
             </p>
 
-            {/* Buttons */}
-            <div style={{
-              display: "flex",
-              gap: "1.5rem",
-              flexWrap: "wrap"
-            }}>
-              <button style={{
-                padding: "1rem 2rem",
-                backgroundColor: "transparent",
-                border: "2px solid #10cedf",
-                color: "#10cedf",
-                fontSize: "1.1rem",
-                fontWeight: "500",
-                borderRadius: "8px",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem"
-              }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#10cedf";
-                  e.target.style.color = "#000";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "transparent";
-                  e.target.style.color = "#10cedf";
-                }}
-              >
-                Hire Me →
-              </button>
 
-              <button style={{
-                padding: "1rem 2rem",
-                backgroundColor: "transparent",
-                border: "2px solid #10cedf",
-                color: "#10cedf",
-                fontSize: "1.1rem",
-                fontWeight: "500",
-                borderRadius: "8px",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem"
-              }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#10cedf";
-                  e.target.style.color = "#000";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "transparent";
-                  e.target.style.color = "#10cedf";
-                }}
-              >
-                Talk To Me →
-              </button>
-            </div>
           </div>
 
           {/* Right Image Section */}

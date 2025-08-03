@@ -1,17 +1,14 @@
-import React from 'react';
 import CustomButton from './CustomButton';
 
-const ButtonContainer = ({ style, text, onClick }) => {
+const ButtonContainer = ({ style, className, text, onClick }) => {
   return (
     <div style={{
       position: 'absolute',
-      top: '80%',
       transform: 'translateY(-50%)',
       zIndex: 2999,
-      pointerEvents: 'auto',
       ...style
-    }}>
-      <CustomButton 
+    }} className={className}>
+      <CustomButton
         text={text}
         onClick={onClick}
       />

@@ -7,15 +7,17 @@ const ProjectShowcase = () => {
 
   const projects = [
     {
+
       id: 1,
-      category: "3D Visualization",
-      title: "Saturn 3D Visualization",
-      description: "Interactive 3D Saturn model with realistic textures, dynamic lighting, and smooth orbital mechanics. Built with Three.js and WebGL for stunning visual performance.",
-      tech: ["Three.js", "WebGL", "React", "GSAP"],
-      image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop",
-      demoLink: "#",
-      sourceLink: "https://sketchfab.com/3d-models/saturn-8f98132d421848aeb12e2165a81838b6",
-      color: "blue"
+      category: "Admission Portal",
+      title: "Student Admission Management",
+      description: "A secure, multi-step admission portal with document uploads, real-time progress tracking, token-based authentication, and admin approval system. Built with MERN stack and AWS integration for performance and scalability.",
+      tech: ["React", "Node.js", "MongoDB", "AWS S3", "Express"],
+      image: "https://images.unsplash.com/photo-1607082349566-187342175e2c?w=800&h=600&fit=crop",
+      demoLink: "https://admission-process-sr5l.vercel.app/",
+      sourceLink: "https://github.com/YashGarg11/Admission_Process", // replace with your link
+      color: "indigo"
+
     },
     {
       id: 2,
@@ -24,8 +26,8 @@ const ProjectShowcase = () => {
       description: "Educational platform featuring interactive planetary orbits, accurate scaling, and detailed celestial body information with smooth physics simulation.",
       tech: ["React", "Three.js", "Physics", "WebGL"],
       image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=800&h=600&fit=crop",
-      demoLink: "#",
-      sourceLink: "#",
+      demoLink: "https://planet-red.vercel.app/",
+      sourceLink: "https://github.com/YashGarg11/planet",
       color: "amber"
     },
     {
