@@ -7,17 +7,15 @@ const ProjectShowcase = () => {
 
   const projects = [
     {
-
       id: 1,
       category: "Admission Portal",
       title: "Student Admission Management",
       description: "A secure, multi-step admission portal with document uploads, real-time progress tracking, token-based authentication, and admin approval system. Built with MERN stack and AWS integration for performance and scalability.",
       tech: ["React", "Node.js", "MongoDB", "AWS S3", "Express"],
-      image: "https://images.unsplash.com/photo-1607082349566-187342175e2c?w=800&h=600&fit=crop",
+      image: "/admission.png",
       demoLink: "https://admission-process-sr5l.vercel.app/",
-      sourceLink: "https://github.com/YashGarg11/Admission_Process", // replace with your link
-      color: "indigo"
-
+      sourceLink: "https://github.com/YashGarg11/Admission_Process",
+      color: "blue"
     },
     {
       id: 2,
@@ -154,79 +152,84 @@ const ProjectShowcase = () => {
       {/* Projects Grid */}
       <section className="px-4 pb-16">
         <div className="max-w-7xl mx-auto space-y-8">
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              ref={el => cardsRef.current[index] = el}
-              className="bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
-                {/* Image Section */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-700">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
+          {projects.map((project, index) => {
+            // This is the key fix - safely get the color variant with fallback
+            const colorVariant = colorVariants[project.color] || colorVariants.blue;
 
-                  {/* Project Number */}
-                  <div className="absolute top-4 right-4 text-4xl md:text-5xl font-black text-white/10">
-                    {String(project.id).padStart(2, '0')}
-                  </div>
-                </div>
+            return (
+              <div
+                key={project.id}
+                ref={el => cardsRef.current[index] = el}
+                className="bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
+                  {/* Image Section */}
+                  <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-700">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
 
-                {/* Content Section */}
-                <div className="p-8 md:p-12 flex flex-col justify-center">
-                  <div className="text-sm text-gray-400 uppercase tracking-wider font-semibold mb-3">
-                    {project.category}
+                    {/* Project Number */}
+                    <div className="absolute top-4 right-4 text-4xl md:text-5xl font-black text-white/10">
+                      {String(project.id).padStart(2, '0')}
+                    </div>
                   </div>
 
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4 leading-tight bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    {project.title}
-                  </h2>
+                  {/* Content Section */}
+                  <div className="p-8 md:p-12 flex flex-col justify-center">
+                    <div className="text-sm text-gray-400 uppercase tracking-wider font-semibold mb-3">
+                      {project.category}
+                    </div>
 
-                  <p className="text-gray-300 leading-relaxed mb-6">
-                    {project.description}
-                  </p>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4 leading-tight bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                      {project.title}
+                    </h2>
 
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tech.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className={`px-3 py-1.5 rounded-full text-sm font-medium border ${colorVariants[project.color].border} ${colorVariants[project.color].bg} ${colorVariants[project.color].text}`}
+                    <p className="text-gray-300 leading-relaxed mb-6">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {project.tech.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className={`px-3 py-1.5 rounded-full text-sm font-medium border ${colorVariant.border} ${colorVariant.bg} ${colorVariant.text}`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-4 flex-wrap">
+                      <a
+                        href={project.demoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-gray-200 hover:transform hover:-translate-y-1 transition-all duration-300"
                       >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-4 flex-wrap">
-                    <a
-                      href={project.demoLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-gray-200 hover:transform hover:-translate-y-1 transition-all duration-300"
-                    >
-                      View Demo
-                    </a>
-                    <a
-                      href={project.sourceLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-6 py-3 bg-transparent text-white border-2 border-gray-600 rounded-full font-semibold hover:border-gray-400 hover:transform hover:-translate-y-1 transition-all duration-300"
-                    >
-                      Source Code
-                    </a>
+                        View Demo
+                      </a>
+                      <a
+                        href={project.sourceLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-transparent text-white border-2 border-gray-600 rounded-full font-semibold hover:border-gray-400 hover:transform hover:-translate-y-1 transition-all duration-300"
+                      >
+                        Source Code
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </div>

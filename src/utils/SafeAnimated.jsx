@@ -1,42 +1,34 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
-// Check if we're in a browser environment
-const isBrowser = typeof window !== 'undefined';
-
-// Check if React is properly initialized
-const isReactAvailable = typeof React !== 'undefined' && React !== null;
-
-// Import animated components only if in browser
-let a;
-if (isBrowser && isReactAvailable) {
-  try {
-    // Dynamic import to avoid SSR issues
-    const reactSpring = require('@react-spring/three');
-    a = reactSpring.a;
-  } catch (error) {
-    console.error('Error importing @react-spring/three:', error);
-    // Provide fallback components
-    a = {
-      ambientLight: 'ambientLight',
-      directionalLight: 'directionalLight',
-      group: 'group',
-      mesh: 'mesh'
-    };
-  }
-} else {
-  // Fallback for SSR
-  a = {
+export const SafeAnimated = () => {
+  const [SafeAnimated, setSafeAnimated] = useState({
     ambientLight: 'ambientLight',
     directionalLight: 'directionalLight',
     group: 'group',
-    mesh: 'mesh'
-  };
-}
+    mesh: 'mesh',
+  });
 
-export const SafeAnimated = {
-  ambientLight: isBrowser && isReactAvailable && a ? a.ambientLight : 'ambientLight',
-  directionalLight: isBrowser && isReactAvailable && a ? a.directionalLight : 'directionalLight',
-  group: isBrowser && isReactAvailable && a ? a.group : 'group',
-  mesh: isBrowser && isReactAvailable && a ? a.mesh : 'mesh',
-  // Add more as needed
-}; 
+  useEffect(() => {
+    let mounted = true;
+    import('@react-spring/three')
+      .then((mod) => {
+        if (mounted) {
+          setSafeAnimated({
+            ambientLight: mod.a.ambientLight,
+            directionalLight: mod.a.directionalLight,
+            group: mod.a.group,
+            mesh: mod.a.mesh,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load @react-spring/three:', err);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  return SafeAnimated;
+};
