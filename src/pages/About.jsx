@@ -195,7 +195,7 @@ const About = () => {
       {/* Heading Section */}
       <div className="flex flex-row justify-center items-center mb-10 space-y-4">
         <p ref={textRef} className="text-white text-4xl sm:text-5xl md:text-7xl font-bold">
-          About
+          <pre>About </pre>
         </p>
         <RotatingText
           texts={['Me', 'Full-Stack-Developer', '3DDeveloper', 'UI/UX Designer', 'Cloud Engineer']}
