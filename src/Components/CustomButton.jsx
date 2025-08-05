@@ -17,6 +17,7 @@ const CustomButton = ({ text, onClick, className }) => {
   }, []);
 
   const buttonStyle = useMemo(() => ({
+    marginBottom: isMobile ? '-100px' : '0px',
     padding: isMobile ? '10px 15px' : '14px 28px',
     fontSize: isMobile ? '1rem' : '1.2rem',
     fontWeight: 'bold',
