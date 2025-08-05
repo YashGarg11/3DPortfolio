@@ -34,7 +34,7 @@ const ProjectShowcase = () => {
       title: "Hospital Management System",
       description: "Comprehensive healthcare platform with patient records, appointment scheduling, billing system, and real-time staff management dashboard.",
       tech: ["Node.js", "MongoDB", "React", "Express"],
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop",
+      image: "/hospital.png",
       demoLink: "#",
       sourceLink: "#",
       color: "emerald"
