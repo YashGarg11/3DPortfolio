@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser';
-import { faGithub, faInstagram, faLinkedin, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faMapMarkerAlt, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
@@ -453,20 +453,8 @@ export default function ContactUs() {
                             }}>
                                 <FontAwesomeIcon icon={faInstagram} />
                             </a>
-                            <a href="https://youtube.com/@yashSculpt_x" target="_blank" rel="noopener noreferrer" style={{
-                                width: "45px",
-                                height: "45px",
-                                borderRadius: "50%",
-                                background: "rgba(16, 206, 223, 0.1)",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "#10cedf",
-                                fontSize: "1.2rem",
-                                transition: "all 0.3s ease"
-                            }}>
-                                <FontAwesomeIcon icon={faYoutube} />
-                            </a>
+
+
                             <a href="https://github.com/YashGarg11" target="_blank" rel="noopener noreferrer" style={{
                                 width: "45px",
                                 height: "45px",
