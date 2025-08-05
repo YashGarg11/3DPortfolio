@@ -183,12 +183,7 @@ export default function Talk() {
                                     onClick={() => window.open("https://instagram.com/__yash_garg_30")}
                                 />
                             </div>
-                            <div style={{ marginTop: "1rem" }}>
-                                <CustomButton
-                                    text="YouTube"
-                                    onClick={() => window.open("https://youtube.com/@yashSculpt_x")}
-                                />
-                            </div>
+
                         </motion.div>
 
                         {/* Schedule a Paid Consultation */}

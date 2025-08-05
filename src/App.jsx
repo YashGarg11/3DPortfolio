@@ -318,13 +318,13 @@ function MainContent() {
                         className="
     fixed 
     z-[3000]
-    left-[14rem] bottom-[15rem]     /* Default: Mobile */
+    left-[10rem] bottom-[15rem]     /* Default: Mobile */
     sm:left-[19rem] sm:bottom-[15rem]
     md:left-[15rem] md:bottom-[2rem]
     lg:left-[16rem] lg:bottom-[1rem]
     xl:left-[18rem] xl:bottom-[0rem]
   "
-                        text="Talk To Me"
+                        text="Contact Me"
                     />
 
 
